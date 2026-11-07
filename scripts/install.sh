@@ -23,7 +23,7 @@ if [ "$1" = "--skills" ]; then
     mkdir -p "$dest"
     for s in .claude/skills/*/; do
       name=$(basename "$s")
-      rm -rf "$dest/$name"
+      rm -rf "${dest:?}/${name:?}"
       cp -R "$s" "$dest/$name"
     done
     echo "skills copied to $dest"

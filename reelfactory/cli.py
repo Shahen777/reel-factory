@@ -13,6 +13,7 @@ COMMANDS = {
     "export": ("reelfactory.export", "export for Reels / TikTok / Shorts (size, bitrate, -14 LUFS)"),
     "watch": ("reelfactory.watch", "contact sheets + transcript so an agent can review a video"),
     "motion": ("reelfactory.motion", "motion design from HTML/JS (written by Claude or Codex) to video"),
+    "remotion": ("reelfactory.remotion", "beautiful animated text with Remotion: titles, captions, cards, lists"),
     "download": ("reelfactory.download", "download video/audio from YouTube, TikTok, Instagram... (yt-dlp)"),
     "beats": ("reelfactory.cli", "print tempo and beat times of a track"),
     "voice": ("reelfactory.voice", "ElevenLabs voice-over (your API key)"),
@@ -27,6 +28,7 @@ def doctor():
         found = shutil.which(tool)
         print(f"{'ok ' if found else 'MISSING'} {tool:<16} {found or 'install: brew install ffmpeg / apt install ffmpeg'}")
         ok = ok and bool(found)
+    print(f"{'ok ' if shutil.which('node') else 'opt'} {'node':<16} optional: reel remotion (Node.js 18+)")
     print(f"{'ok ' if shutil.which('yt-dlp') else 'opt'} {'yt-dlp':<16} optional: reel download, reel watch <url>")
     for mod, why in (("PIL", "required"), ("numpy", "required"), ("librosa", "required: beat detection"),
                      ("faster_whisper", "optional: subtitles, watch transcript"),

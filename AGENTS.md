@@ -3,9 +3,13 @@
 This repo is a toolkit for making short vertical videos (Reels, TikTok, Shorts) with ffmpeg.
 The user talks to you in plain words; you run the `reel` commands, look at the results and report.
 
+## Installing on a new computer
+
+If the user asks you to install Reel Factory, follow [SETUP.md](SETUP.md) step by step.
+
 ## Setup check
 
-Run `reel doctor` (or `python3 -m reelfactory doctor`) first. If `reel` is not on PATH, use `python3 -m reelfactory`.
+Run `reel doctor` first. If `reel` is not on PATH, use `./.venv/bin/reel` (after the bootstrap) or `python3 -m reelfactory`.
 If something is missing, tell the user the exact install command from README.
 
 ## Skills
@@ -23,6 +27,7 @@ Read the matching `SKILL.md` before the task:
 | ElevenLabs voice-over | `reel-voice` |
 | AI images and video via kie.ai | `reel-ai-video` |
 | hook, script, caption, hashtags | `reel-hooks` |
+| premium animated text, TikTok captions (Remotion) | `reel-remotion` |
 | motion design, kinetic text, animated graphics | `reel-motion` |
 | download from YouTube, TikTok, Instagram... | `reel-download` |
 
@@ -35,6 +40,7 @@ reel subtitles VIDEO [--lang ru]           Whisper subtitles, SRT
 reel reframe VIDEO [--aspect 9:16]         remove bars, reframe
 reel export VIDEO --all                    Reels / TikTok / Shorts files, -14 LUFS
 reel watch VIDEO [--dense 3-6]             contact sheets + transcript for you to read
+reel remotion COMP [--set k=v] [--video]   Remotion text: KineticTitle, Captions, TextReveal, ListStack
 reel motion SCENE [--set k=v] [--music]    HTML/JS animation -> MP4 / alpha MOV
 reel download URL [--section a-b]          YouTube, TikTok, Instagram... via yt-dlp
 reel beats TRACK                           tempo and beat times
@@ -64,6 +70,8 @@ reel kie balance | price | image | video   kie.ai (KIE_API_KEY), price first, --
 reelfactory/   python package: cli.py, montage.py, auto.py, subtitles.py, reframe.py, export.py, watch.py,
                motion.py, download.py, beats.py, titles.py, voice.py, kie.py, ffutil.py,
                assets/fonts (OFL fonts), assets/motion (HTML motion templates)
+remotion/      Remotion (React) project with text compositions, used by `reel remotion`
+scripts/       bootstrap.sh / bootstrap.ps1 (clean-computer setup), install.sh
 docs/          EDL.md (montage format), HOOKS.md (hooks and endings)
 examples/      demo EDL and a script that renders it from generated test media
 tests/         pytest, no network

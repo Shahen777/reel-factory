@@ -17,6 +17,8 @@
   вспышки, тряска, цветокор
 - **Автомонтаж.** Сам выбирает самые резкие и динамичные моменты из папки и режет их под музыку
 - **Титры и кинетический текст.** Шрифты с кириллицей в комплекте, безопасные зоны соцсетей
+- **Красивый анимированный текст на Remotion.** Буквы с пружинной анимацией, субтитры по словам как в TikTok
+  с подсвеченной плашкой, титульные карточки с раскрытием, списки по пунктам. Поверх видео, градиента или прозрачно
 - **Моушн-дизайн кодом.** Агент пишет анимацию на HTML/JS, `reel motion` снимает её покадрово в MP4 или в MOV
   с прозрачным фоном. Шаблоны: кинетический текст, счётчик цифр, плашка с именем
 - **Субтитры по речи.** Whisper на вашем компьютере, стили bold, clean и караоке, выгрузка SRT
@@ -28,9 +30,30 @@
 - **ИИ-кадры.** Картинки и видео через kie.ai (Nano Banana, Veo 3.1) с вашим ключом, цена показывается до запуска
 - **Хуки и сценарии.** Шпаргалка для агента: 20 типов хуков, приёмы удержания и концовки
 
-## Установка
+## Установка на пустой компьютер
 
-Нужны Python 3.10+ и ffmpeg.
+Откройте на новом компьютере Claude Code или Codex и вставьте:
+
+> Установи Reel Factory с https://github.com/Shahen777/reel-factory на этот компьютер. Следуй SETUP.md из репозитория по шагам и проверь, что всё работает.
+
+Агент запустит установщик. Тот сам поставит git, ffmpeg, Python, Node.js и yt-dlp, если их нет, а потом всё остальное.
+Если для шага нужен ваш пароль (Homebrew на macOS, apt на Linux), агент покажет точную команду, которую надо выполнить.
+
+Или запустите сами:
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/Shahen777/reel-factory/main/scripts/bootstrap.sh | bash
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/Shahen777/reel-factory/main/scripts/bootstrap.ps1 | iex
+```
+
+## Установка вручную
+
+Нужны Python 3.10+ и ffmpeg (для Remotion ещё Node.js 18+).
 
 ```bash
 # macOS
@@ -86,6 +109,7 @@ Codex читает `AGENTS.md` и те же навыки через `.agents/ski
 |---|---|
 | `reel montage edl.json [--preview]` | монтаж под бит, формат в [docs/EDL.md](docs/EDL.md) |
 | `reel auto ПАПКА --music ТРЕК --duration 30 --style punchy` | автомонтаж, сохраняет сценарий для правки |
+| `reel remotion KineticTitle --set 'lines=["ПРИВЕТ","*МИР*"]'` | текст на Remotion: KineticTitle, Captions, TextReveal, ListStack |
 | `reel motion kinetic --set text="ПРИВЕТ" --music ТРЕК` | моушн-дизайн из HTML/JS (`reel motion list`) |
 | `reel subtitles ВИДЕО --lang ru --style karaoke` | субтитры Whisper, SRT |
 | `reel reframe ВИДЕО --aspect 9:16` | убрать полосы, перекадрировать |
@@ -107,3 +131,4 @@ Codex читает `AGENTS.md` и те же навыки через `.agents/ski
 ## Лицензия
 
 MIT. Шрифты в комплекте (Russo One, PT Sans) под лицензией SIL Open Font License.
+У Remotion своя лицензия: бесплатно для частных лиц и компаний до 3 человек, иначе нужна платная (remotion.dev/license).

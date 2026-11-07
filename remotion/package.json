@@ -1,0 +1,21 @@
+{
+  "name": "reel-factory-remotion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Remotion compositions for beautiful animated text (Reel Factory)",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.489",
+    "@remotion/media": "4.0.489",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.489"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "typescript": "5.9.3"
+  }
+}

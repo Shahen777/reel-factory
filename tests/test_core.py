@@ -114,3 +114,19 @@ def test_skills_have_frontmatter():
     for n in names:
         txt = open(os.path.join(root, n, "SKILL.md"), encoding="utf-8").read()
         assert txt.startswith("---\nname: " + n + "\ndescription: ")
+
+
+def test_remotion_project_registered():
+    root = os.path.dirname(os.path.dirname(os.path.abspath(cli.__file__)))
+    rootx = open(os.path.join(root, "remotion", "src", "Root.tsx"), encoding="utf-8").read()
+    from reelfactory import remotion as rm
+    for comp in rm.COMPS:
+        assert f'id="{comp}"' in rootx
+    assert os.path.exists(os.path.join(root, "remotion", "public", "fonts", "RussoOne-Regular.ttf"))
+
+
+def test_remotion_words_formats(tmp_path):
+    from reelfactory.remotion import load_words
+    a = tmp_path / "a.json"; a.write_text('[{"w":"hi","s":0.1,"e":0.4}]', encoding="utf-8")
+    b = tmp_path / "b.json"; b.write_text('[{"word":"hi","start":0.1,"end":0.4}]', encoding="utf-8")
+    assert load_words(str(a)) == load_words(str(b)) == [{"w": "hi", "s": 0.1, "e": 0.4}]

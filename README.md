@@ -17,6 +17,8 @@ Everything runs locally with ffmpeg. Paid AI services are optional and use your 
   flashes, shake, colour look
 - **Automatic montage** — picks the sharpest, most dynamic moments from a folder and cuts them to the music
 - **Titles and kinetic text** — Latin and Cyrillic fonts included, social safe zones respected
+- **Premium animated text with Remotion** — springy kinetic titles, TikTok-style word captions with a highlight pill,
+  title cards with mask reveal, stacking lists; over video, a gradient or transparent
 - **Motion design from code** — the agent writes an HTML/JS animation, `reel motion` renders it frame by frame to MP4
   or transparent MOV; templates for kinetic type, stat counters and lower thirds
 - **Speech subtitles** — local Whisper, bold / clean / karaoke styles, SRT export
@@ -28,9 +30,30 @@ Everything runs locally with ffmpeg. Paid AI services are optional and use your 
 - **AI shots** — images and video through kie.ai (Nano Banana, Veo 3.1) with your key; the price is shown first
 - **Hooks and scripts** — a cheat sheet of 20 hook types, retention tricks and endings for the agent
 
-## Install
+## Install on an empty computer
 
-You need Python 3.10+ and ffmpeg.
+Open Claude Code or Codex on the new computer and paste:
+
+> Install Reel Factory from https://github.com/Shahen777/reel-factory on this computer. Follow SETUP.md in that repo step by step and check that everything works.
+
+The agent runs the bootstrap, which installs git, ffmpeg, Python, Node.js and yt-dlp if missing, then everything else.
+If a step needs your password (Homebrew on macOS, apt on Linux), the agent shows you the exact command to run.
+
+Or run it yourself:
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/Shahen777/reel-factory/main/scripts/bootstrap.sh | bash
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/Shahen777/reel-factory/main/scripts/bootstrap.ps1 | iex
+```
+
+## Install by hand
+
+You need Python 3.10+ and ffmpeg (Node.js 18+ for Remotion).
 
 ```bash
 # macOS
@@ -85,6 +108,7 @@ Codex reads `AGENTS.md` and the same skills through `.agents/skills/`. Ask in th
 |---|---|
 | `reel montage edl.json [--preview]` | render a beat-locked edit, format in [docs/EDL.md](docs/EDL.md) |
 | `reel auto FOLDER --music TRACK --duration 30 --style punchy` | automatic edit, writes an editable EDL |
+| `reel remotion KineticTitle --set 'lines=["HI","*THERE*"]'` | Remotion text: KineticTitle, Captions, TextReveal, ListStack |
 | `reel motion kinetic --set text="HELLO" --music TRACK` | motion design from HTML/JS (`reel motion list`) |
 | `reel subtitles VIDEO --lang ru --style karaoke` | Whisper subtitles, SRT |
 | `reel reframe VIDEO --aspect 9:16` | remove black bars, reframe |
@@ -122,3 +146,5 @@ never try to get around sign-in walls or bot checks. If a safety filter blocks a
 ## License
 
 MIT. Bundled fonts (Russo One, PT Sans) are under the SIL Open Font License.
+Remotion has its own licence: free for individuals and companies of up to 3 people, a company licence otherwise
+(see remotion.dev/license).

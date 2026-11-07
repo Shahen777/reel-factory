@@ -23,3 +23,5 @@ build/
 dist/
 .pytest_cache/
 .DS_Store
+node_modules/
+remotion/public/_in/
