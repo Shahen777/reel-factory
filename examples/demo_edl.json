@@ -1,0 +1,20 @@
+{
+  "out": "../out/demo.mp4",
+  "music": "../media/demo/beat.wav",
+  "fps": 30, "w": 1080, "h": 1920,
+  "look": {"contrast": 1.05, "saturation": 1.1, "sharpen": 0.4, "grain": 3, "vignette": true},
+  "segments": [
+    {"type": "video", "src": "../media/demo/wide.mp4", "in": 0.5, "beats": 2, "fit": "4x5", "push": 0.1, "flash": 0.08},
+    {"type": "video", "src": "../media/demo/tall.mp4", "in": 1.0, "beats": 2, "push": 0.08},
+    {"type": "photo", "src": "../media/demo/photo.jpg", "beats": 2, "cy": 0.45},
+    {"type": "video", "src": "../media/demo/tall.mp4", "in": 3.0, "beats": 1, "shake": 6},
+    {"type": "video", "src": "../media/demo/wide.mp4", "in": 2.0, "beats": 1, "fit": "4x5", "flash": 0.06},
+    {"type": "video", "src": "../media/demo/wide.mp4", "in": 4.0, "beats": 4, "fit": "4x5", "speed": 0.5},
+    {"type": "black", "beats": 4}
+  ],
+  "titles": [
+    {"text": "REEL FACTORY", "at_beat": 0, "beats": 4, "y": 0.3, "size": 140, "anim": "pop", "stroke": "#000000"},
+    {"text": "Монтаж под бит", "sub": "Claude Code + Codex", "at_beat": 12, "beats": 4, "y": 0.5, "size": 92, "scrim": true}
+  ],
+  "audio": {"fade_in": 0.1, "fade_out": 1.0}
+}

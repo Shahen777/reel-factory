@@ -1,0 +1,55 @@
+<!-- Kinetic typography: phrases pop in word by word over a dark animated glow. DATA: lines[], text, accent, bg, per_line -->
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07070b}
+#bg{position:absolute;inset:0}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+#stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#line{width:84%;text-align:center;font-family:Display,Impact,sans-serif;color:#fff;font-size:150px;line-height:1.02;text-transform:uppercase}
+.w{display:inline-block;margin:0 .12em;will-change:transform}
+.acc{color:var(--accent)}
+#bar{position:absolute;left:8%;bottom:16%;height:10px;background:var(--accent);border-radius:5px}
+</style></head><body>
+<div id="bg"><div class="orb" id="o1"></div><div class="orb" id="o2"></div></div>
+<div id="stage"><div id="line"></div></div><div id="bar"></div>
+<script>
+const D = window.DATA || {};
+const lines = D.lines || (D.text ? [D.text] : ["MAKE IT", "*MOVE*", "ON THE BEAT"]);
+const per = D.per_line || 1.6;
+window.MOTION = {duration: D.duration || Math.max(3, lines.length * per + 0.8), fps: 30, width: 1080, height: 1920};
+document.documentElement.style.setProperty('--accent', D.accent || '#ffcc00');
+document.body.style.background = D.bg || '#07070b';
+const o1 = document.getElementById('o1'), o2 = document.getElementById('o2');
+Object.assign(o1.style, {width:'900px', height:'900px', background: D.accent || '#ffcc00'});
+Object.assign(o2.style, {width:'1000px', height:'1000px', background: D.accent2 || '#6a3cff'});
+const lineEl = document.getElementById('line'), bar = document.getElementById('bar');
+const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const easeOutBack = x => { const c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(x-1,3) + c1*Math.pow(x-1,2); };
+const easeOut = x => 1 - Math.pow(1-x, 3);
+let built = -1;
+function build(i){
+  lineEl.innerHTML = lines[i].split(' ').map(w => {
+    const acc = /^\*.*\*$/.test(w); return `<span class="w${acc?' acc':''}">${acc?w.slice(1,-1):w}</span>`;
+  }).join(' ');
+  built = i;
+}
+window.renderFrame = (t) => {
+  o1.style.transform = `translate(${-200 + 260*Math.sin(t*0.6)}px, ${200 + 300*Math.cos(t*0.45)}px)`;
+  o2.style.transform = `translate(${400 + 220*Math.cos(t*0.5)}px, ${1100 + 260*Math.sin(t*0.4)}px)`;
+  const i = Math.min(lines.length-1, Math.floor(t/per));
+  if (i !== built) build(i);
+  const lt = t - i*per;
+  const words = lineEl.querySelectorAll('.w');
+  // beat pulse: small scale kick on every beat if music beats are given
+  let pulse = 0;
+  for (const b of (window.BEATS||[])) { const d = t-b; if (d>=0 && d<0.18) pulse = Math.max(pulse, 1-d/0.18); }
+  words.forEach((w, k) => {
+    const s = clamp((lt - k*0.09)/0.32);
+    const out = i < lines.length-1 ? clamp((lt - (per-0.22))/0.22) : 0;
+    const sc = (0.4 + 0.6*easeOutBack(s)) * (1 + 0.04*pulse) * (1 - 0.3*out);
+    w.style.opacity = s * (1-out);
+    w.style.transform = `translateY(${(1-easeOut(s))*90 - out*60}px) scale(${sc})`;
+    w.style.filter = `blur(${(1-s)*10 + out*8}px)`;
+  });
+  bar.style.width = `${84*clamp(t/window.MOTION.duration)}%`;
+};
+</script></body></html>

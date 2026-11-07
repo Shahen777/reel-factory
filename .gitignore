@@ -1,0 +1,25 @@
+# secrets
+.env
+.env.*
+!.env.example
+# media and renders
+media/
+out/
+watch_*/
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.m4a
+*.beats.json
+.tmp_*/
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.DS_Store

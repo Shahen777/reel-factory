@@ -1,0 +1,36 @@
+<!-- Stat counter: a big number counts up inside a ring, then a label slides in. DATA: value, prefix, suffix, label, sub, accent -->
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 50% 40%,#1b1d2a 0%,#08080c 70%)}
+svg{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%)}
+#num{position:absolute;left:0;right:0;top:38%;transform:translateY(-50%);text-align:center;font-family:Display,Impact,sans-serif;color:#fff;font-size:190px;letter-spacing:2px}
+#label{position:absolute;left:0;right:0;top:63%;text-align:center;font-family:Display,sans-serif;color:#fff;font-size:84px;text-transform:uppercase}
+#sub{position:absolute;left:10%;right:10%;top:70%;text-align:center;font-family:Sans,sans-serif;color:#b9bccb;font-size:46px}
+</style></head><body>
+<svg width="820" height="820" viewBox="0 0 820 820">
+ <circle cx="410" cy="410" r="360" stroke="#2a2d3d" stroke-width="26" fill="none"/>
+ <circle id="ring" cx="410" cy="410" r="360" stroke-width="26" fill="none" stroke-linecap="round" transform="rotate(-90 410 410)"/>
+</svg>
+<div id="num"></div><div id="label"></div><div id="sub"></div>
+<script>
+const D = window.DATA || {};
+window.MOTION = {duration: D.duration || 5, fps: 30, width: 1080, height: 1920};
+const accent = D.accent || '#21e6a1', value = Number(D.value ?? 98), dec = String(D.value ?? '').includes('.') ? 1 : 0;
+const ring = document.getElementById('ring'), num = document.getElementById('num');
+const label = document.getElementById('label'), sub = document.getElementById('sub');
+ring.setAttribute('stroke', accent); const C = 2*Math.PI*360; ring.setAttribute('stroke-dasharray', C);
+label.textContent = D.label || 'happy clients'; sub.textContent = D.sub || '';
+const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x)); const ease = x => 1-Math.pow(1-x,4);
+window.renderFrame = (t) => {
+  const p = ease(clamp((t-0.3)/2.2));
+  const frac = D.ring_max ? value/D.ring_max : 1;
+  ring.setAttribute('stroke-dashoffset', C*(1 - p*frac));
+  num.textContent = (D.prefix||'') + (value*p).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}).replace(/,/g,' ') + (D.suffix ?? '%');
+  num.style.transform = `translateY(-50%) scale(${0.85+0.15*ease(clamp(t/0.5))})`;
+  num.style.opacity = clamp(t/0.3);
+  const l = ease(clamp((t-2.2)/0.5)), s = ease(clamp((t-2.5)/0.5));
+  label.style.opacity = l; label.style.transform = `translateY(${(1-l)*50}px)`;
+  sub.style.opacity = s; sub.style.transform = `translateY(${(1-s)*40}px)`;
+  const glow = 20 + 30*Math.exp(-Math.max(0,t-2.5)*2)*(t>2.5);
+  ring.style.filter = `drop-shadow(0 0 ${glow}px ${accent})`;
+};
+</script></body></html>

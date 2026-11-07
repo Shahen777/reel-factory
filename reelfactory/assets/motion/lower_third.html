@@ -1,0 +1,30 @@
+<!-- Lower third for overlays: name + role bar slides in and out. Use with --transparent. DATA: name, role, accent, y -->
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}
+#box{position:absolute;left:70px;display:flex;flex-direction:column;gap:10px}
+#name{font-family:Display,sans-serif;font-size:76px;color:#fff;background:#0d0d12e6;padding:14px 30px;border-radius:14px;white-space:nowrap;clip-path:inset(0 100% 0 0)}
+#role{font-family:Sans,sans-serif;font-size:42px;color:#0d0d12;padding:10px 26px;border-radius:12px;align-self:flex-start;white-space:nowrap;clip-path:inset(0 100% 0 0)}
+#accent{position:absolute;left:70px;width:12px;border-radius:6px}
+</style></head><body>
+<div id="accent"></div><div id="box"><div id="name"></div><div id="role"></div></div>
+<script>
+const D = window.DATA || {};
+window.MOTION = {duration: D.duration || 4, fps: 30, width: 1080, height: 1920};
+const accent = D.accent || '#ffcc00';
+const box = document.getElementById('box'), nm = document.getElementById('name'), rl = document.getElementById('role'), ac = document.getElementById('accent');
+nm.textContent = D.name || 'Anna Petrova'; rl.textContent = D.role || 'Founder, Studio North';
+rl.style.background = accent; ac.style.background = accent;
+const y = (D.y || 0.70) * 1920; box.style.top = y + 'px';
+const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x)); const ease = x => 1-Math.pow(1-x,3);
+window.renderFrame = (t) => {
+  const T = window.MOTION.duration;
+  const a = ease(clamp((t-0.1)/0.45)), b = ease(clamp((t-0.35)/0.45));
+  const out = ease(clamp((t-(T-0.6))/0.45));
+  nm.style.clipPath = `inset(0 ${100*(1-a) + 100*out}% 0 0)`;
+  rl.style.clipPath = `inset(0 ${100*(1-b) + 100*out}% 0 0)`;
+  const h = box.offsetHeight;
+  ac.style.top = (y + h*(1-a)/2*0) + 'px'; ac.style.height = (h*a*(1-out)) + 'px';
+  ac.style.left = (40) + 'px';
+  box.style.transform = `translateX(${(1-a)*-30}px)`;
+};
+</script></body></html>
