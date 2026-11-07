@@ -30,6 +30,7 @@ Read the matching `SKILL.md` before the task:
 | premium animated text, TikTok captions (Remotion) | `reel-remotion` |
 | motion design, kinetic text, animated graphics | `reel-motion` |
 | download from YouTube, TikTok, Instagram... | `reel-download` |
+| many agents at once, parallel variants, swarms | `reel-crew` |
 
 ## Commands
 
@@ -43,6 +44,8 @@ reel watch VIDEO [--dense 3-6]             contact sheets + transcript for you t
 reel remotion COMP [--set k=v] [--video]   Remotion text: KineticTitle, Captions, TextReveal, ListStack
 reel motion SCENE [--set k=v] [--music]    HTML/JS animation -> MP4 / alpha MOV
 reel download URL [--section a-b]          YouTube, TikTok, Instagram... via yt-dlp
+reel batch JOBS.json [--parallel N]        many reel commands in parallel, with `after`
+reel crew PLAN.json [--engine codex]       agent mode: many Claude/Codex agents at once (docs/AGENT_MODE.md)
 reel beats TRACK                           tempo and beat times
 reel voice list | say                      ElevenLabs (ELEVENLABS_API_KEY)
 reel kie balance | price | image | video   kie.ai (KIE_API_KEY), price first, --yes to pay
@@ -63,6 +66,12 @@ reel kie balance | price | image | video   kie.ai (KIE_API_KEY), price first, --
    has no rights to. If a safety filter blocks a generation, change the idea; do not try to get around the filter.
 8. **Do not bypass sign-in walls, bot checks or CAPTCHAs** when downloading; ask the user for the file.
 9. Report at the end: what was made (path, duration, format), what you checked, what you did not check.
+
+## Agent mode
+
+Roles for parallel work are in `.claude/agents/` (Claude Code subagents) and `.codex/agents/` (Codex).
+See [docs/AGENT_MODE.md](docs/AGENT_MODE.md). When several agents run at once, each writes only inside its own
+task folder and its named outputs.
 
 ## Code layout
 

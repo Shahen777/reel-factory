@@ -45,6 +45,8 @@ def list_voices():
 
 
 def say(text, voice, out, model="eleven_v4", lang=None, stability=0.45, similarity=0.8, style=0.2, speed=1.0):
+    if os.environ.get("REEL_NO_PAID"):
+        raise SystemExit("[reel] paid voice-over is disabled for crew workers (REEL_NO_PAID). Ask the user first.")
     body = {"text": text, "model_id": model,
             "voice_settings": {"stability": stability, "similarity_boost": similarity, "style": style, "speed": speed}}
     if lang:

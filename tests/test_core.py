@@ -130,3 +130,45 @@ def test_remotion_words_formats(tmp_path):
     a = tmp_path / "a.json"; a.write_text('[{"w":"hi","s":0.1,"e":0.4}]', encoding="utf-8")
     b = tmp_path / "b.json"; b.write_text('[{"word":"hi","start":0.1,"end":0.4}]', encoding="utf-8")
     assert load_words(str(a)) == load_words(str(b)) == [{"w": "hi", "s": 0.1, "e": 0.4}]
+
+
+def test_parallel_runs_dependencies_in_order():
+    import threading, time as _t
+    from reelfactory.parallel import run_all
+    order, lock = [], threading.Lock()
+    def worker(job):
+        _t.sleep(0.05)
+        with lock:
+            order.append(job["id"])
+        return job["id"] != "bad", ""
+    jobs = [{"id": "a"}, {"id": "b"}, {"id": "c", "after": ["a", "b"]}, {"id": "bad"}, {"id": "d", "after": ["bad"]}]
+    st = run_all(jobs, worker, parallel=3)
+    assert order.index("c") > order.index("a") and order.index("c") > order.index("b")
+    assert st["bad"]["state"] == "failed" and st["d"]["state"] == "skipped" and st["c"]["state"] == "done"
+
+
+def test_parallel_rejects_cycles():
+    from reelfactory.parallel import check_graph
+    with pytest.raises(SystemExit):
+        check_graph([{"id": "a", "after": ["b"]}, {"id": "b", "after": ["a"]}])
+
+
+def test_crew_roles_prompt_and_codex_agents_in_sync(tmp_path):
+    from reelfactory import crew
+    rl = crew.roles()
+    assert {"editor", "motion-designer", "captioner", "scriptwriter", "qa"} <= set(rl)
+    prompt = crew.build_prompt({"id": "x", "prompt": "do it", "outputs": ["out/x.mp4"]}, rl["editor"], "brief", "/tmp/x", [])
+    assert "REEL_NO_PAID" in prompt and "out/x.mp4" in prompt
+    crew.export_codex(str(tmp_path))
+    root = os.path.dirname(os.path.dirname(os.path.abspath(cli.__file__)))
+    for f in os.listdir(tmp_path):
+        assert open(tmp_path / f, encoding="utf-8").read() == open(os.path.join(root, ".codex", "agents", f), encoding="utf-8").read()
+
+
+def test_paid_apis_refuse_in_crew(monkeypatch):
+    from reelfactory import kie, voice
+    monkeypatch.setenv("REEL_NO_PAID", "1")
+    with pytest.raises(SystemExit):
+        kie.gate("veo3_lite", 1, True)
+    with pytest.raises(SystemExit):
+        voice.say("hi", "v", "/tmp/x.mp3")

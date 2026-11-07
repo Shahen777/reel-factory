@@ -1,0 +1,20 @@
+{
+  "engine": "claude",
+  "parallel": 3,
+  "model": null,
+  "brief": "Demo project: footage and music are in media/demo (run `python3 examples/make_demo.py` once if it is empty). Vertical 9:16, accent colour #ffcc00, on-screen text in Russian.",
+  "tasks": [
+    {"id": "script", "role": "scriptwriter",
+     "prompt": "Write 2 hook options and a 10-second script for a demo video that shows off beat-synced editing. Save it as out/crew_demo/SCRIPT.md.",
+     "outputs": ["out/crew_demo/SCRIPT.md"]},
+    {"id": "card", "role": "motion-designer",
+     "prompt": "Render a 3-second title card with `reel remotion TextReveal`: kicker «Reel Factory», title «МОНТАЖ ПОД БИТ», accent #ffcc00. Save out/crew_demo/card.mp4 and check it with reel watch.",
+     "outputs": ["out/crew_demo/card.mp4"]},
+    {"id": "edit", "role": "editor",
+     "prompt": "Make a 10-second punchy cut of media/demo to media/demo/beat.wav with `reel auto --preview`, title «ДЕМО». Save out/crew_demo/edit.mp4 and check it with reel watch.",
+     "outputs": ["out/crew_demo/edit.mp4"]},
+    {"id": "qa", "role": "qa", "after": ["card", "edit"],
+     "prompt": "Review out/crew_demo/card.mp4 and out/crew_demo/edit.mp4. Write out/crew_demo/QA.md.",
+     "outputs": ["out/crew_demo/QA.md"]}
+  ]
+}

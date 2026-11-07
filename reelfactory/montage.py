@@ -301,7 +301,8 @@ def main(argv=None):
     ap.add_argument("--preview", action="store_true", help="fast render: skip slow-motion interpolation")
     a = ap.parse_args(argv)
     edl = json.load(open(a.edl, encoding="utf-8"))
-    render_edl(edl, base_dir=os.path.dirname(os.path.abspath(a.edl)), preview=a.preview, out=a.out)
+    out = os.path.abspath(a.out) if a.out else None  # --out is relative to the current folder, EDL "out" to the EDL
+    render_edl(edl, base_dir=os.path.dirname(os.path.abspath(a.edl)), preview=a.preview, out=out)
 
 
 if __name__ == "__main__":

@@ -15,6 +15,8 @@ COMMANDS = {
     "motion": ("reelfactory.motion", "motion design from HTML/JS (written by Claude or Codex) to video"),
     "remotion": ("reelfactory.remotion", "beautiful animated text with Remotion: titles, captions, cards, lists"),
     "download": ("reelfactory.download", "download video/audio from YouTube, TikTok, Instagram... (yt-dlp)"),
+    "batch": ("reelfactory.batch", "run many reel commands in parallel, with dependencies"),
+    "crew": ("reelfactory.crew", "agent mode: many Claude Code / Codex agents work at once on one project"),
     "beats": ("reelfactory.cli", "print tempo and beat times of a track"),
     "voice": ("reelfactory.voice", "ElevenLabs voice-over (your API key)"),
     "kie": ("reelfactory.kie", "kie.ai images and video, price shown first (your API key)"),

@@ -28,6 +28,9 @@ Everything runs locally with ffmpeg. Paid AI services are optional and use your 
 - **Download** — YouTube, TikTok, Instagram, VK and more through yt-dlp, whole or a time range
 - **Voice-over** — ElevenLabs with your key, music ducks under the voice
 - **AI shots** — images and video through kie.ai (Nano Banana, Veo 3.1) with your key; the price is shown first
+- **Agent mode** — many agents at once: editors for several variants, a motion designer, a captioner, a
+  scriptwriter and QA in parallel, as Claude Code subagents, headless Claude/Codex workers (`reel crew`) or Ruflo swarms;
+  `reel batch` renders many jobs in parallel
 - **Hooks and scripts** — a cheat sheet of 20 hook types, retention tricks and endings for the agent
 
 ## Install on an empty computer
@@ -115,6 +118,8 @@ Codex reads `AGENTS.md` and the same skills through `.agents/skills/`. Ask in th
 | `reel export VIDEO --all` | Reels, TikTok and Shorts files |
 | `reel watch VIDEO [--dense 3-6]` | contact sheets + transcript for the agent |
 | `reel download URL [--section 0:10-0:25]` | download video or audio |
+| `reel crew plan.json [--engine codex]` | agent mode, see [docs/AGENT_MODE.md](docs/AGENT_MODE.md) |
+| `reel batch jobs.json` | many renders in parallel with dependencies |
 | `reel beats TRACK` | tempo and beat times |
 | `reel voice list` / `reel voice say ...` | ElevenLabs voice-over |
 | `reel kie price veo` / `image` / `video` | kie.ai generation, runs only with `--yes` |

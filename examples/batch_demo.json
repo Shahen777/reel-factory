@@ -1,0 +1,7 @@
+{"parallel": 3, "jobs": [
+  {"id": "demo", "cmd": "montage examples/demo_edl.json --preview --out out/batch_demo/demo.mp4"},
+  {"id": "title", "cmd": "motion kinetic --set text=BATCH --duration 2 --out out/batch_demo/title.mp4"},
+  {"id": "card", "cmd": "remotion TextReveal --set title=BATCH --duration 2 --out out/batch_demo/card.mp4"},
+  {"id": "reframe", "cmd": "reframe media/demo/wide.mp4 --out out/batch_demo/wide_916.mp4"},
+  {"id": "export", "cmd": "export out/batch_demo/demo.mp4 --preset telegram --out out/batch_demo/demo_tg.mp4", "after": ["demo"]}
+]}

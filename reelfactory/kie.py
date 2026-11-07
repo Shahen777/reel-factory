@@ -152,6 +152,8 @@ def fetch(url, out, tries=8):
 
 
 def gate(model, n, yes):
+    if os.environ.get("REEL_NO_PAID"):
+        raise SystemExit("[reel] paid generation is disabled for crew workers (REEL_NO_PAID). Ask the user first.")
     est = EST.get(model)
     msg = f"~{est * n} credits (~${est * n * 0.005:.2f})" if est else "unknown price, run `reel kie price <model>`"
     print(f"[reel] {model} x{n}: {msg}")
