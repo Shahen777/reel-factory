@@ -29,6 +29,8 @@ COMPS = {
     "ListStack": "title + items stacking one by one; title, items[], perItem, numbered",
 }
 FILE_PROPS = ("video", "music")
+# example texts in Root.tsx defaultProps must not leak into a user's render
+BLANK_IF_MISSING = {"TextReveal": ("kicker", "subtitle"), "ListStack": ("title",)}
 
 
 def _need_project():
@@ -140,6 +142,9 @@ def main(argv=None):
         if a.video and not a.duration:
             from .ffutil import probe
             props["durationInSeconds"] = round(probe(a.video)["duration"], 3)
+    if props:
+        for k in BLANK_IF_MISSING.get(a.comp, ()):
+            props.setdefault(k, "")
     out = a.out or os.path.join("out", a.comp + (".mov" if a.transparent else ".mp4"))
     render(a.comp, out, props, a.transparent)
 
