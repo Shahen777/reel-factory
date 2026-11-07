@@ -69,4 +69,4 @@ examples/      demo EDL and a script that renders it from generated test media
 tests/         pytest, no network
 ```
 
-Tests: `python3 -m pytest -q`. Keep Python 3.9 compatible, no new heavy dependencies.
+Tests: `python3 -m pytest -q`. Keep Python 3.10 compatible, no new heavy dependencies.

@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Beat-synced short-form video montage (Reels, TikTok, Shorts) for Claude Code and Codex"
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = ["numpy", "Pillow>=9", "librosa>=0.10"]
 keywords = ["video", "montage", "reels", "tiktok", "shorts", "ffmpeg", "claude-code", "codex"]
 

@@ -30,7 +30,7 @@
 
 ## Установка
 
-Нужны Python 3.9+ и ffmpeg.
+Нужны Python 3.10+ и ffmpeg.
 
 ```bash
 # macOS

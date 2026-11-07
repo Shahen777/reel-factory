@@ -30,7 +30,7 @@ Everything runs locally with ffmpeg. Paid AI services are optional and use your 
 
 ## Install
 
-You need Python 3.9+ and ffmpeg.
+You need Python 3.10+ and ffmpeg.
 
 ```bash
 # macOS
